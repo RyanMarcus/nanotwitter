@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Nano Twitter</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Nano Twitter</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/home">Home</a></li>
+            <li><a href="/profile/<%= current_user_id %>">Profile</a></li>
+            <li><a href="/logout">Log out</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+
+      <div class="row">
+	<div class="col-md-12">
+          <h1>
+	  Profile of <%= get_name_of user %> 
+	  <% if "#{current_user_id}" == "#{user}" %>
+	  (me)
+	  <% end %>
+	  </h1>
+          <p class="lead">And it looks like <%= get_name_of user %> has been having a lot of fun...</p>
+
+	</div>
+      </div>
+      
+      <div class="row">
+	<div class="col-md-12">
+	  <% if defined?(error_message) %>
+	  <div class="alert alert-danger" role="alert">
+	    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+	    <span class="sr-only">Error:</span>
+	    <%= error_message %>
+	  </div>
+	  <% end %>
+	</div>
+      </div>
+      
+      
+    </div><!-- /.container -->
+    
+    <% if defined? tweets %>
+    <div class="container">
+      <% for item in tweets %>
+      <div class="row">
+	<div class="panel panel-default">
+	  <div class="panel-body">
+	    <img width="32px" height="32px" style="margin-right: 10px" class="pull-left" src="<%= get_gravatar item[:email] %>" />
+	    <p><strong><%= item[:email] %></strong></p>
+	    <p><%= item[:text] %></p>
+	  </div>
+	  
+	  <div class="panel-footer">
+	    <%= item[:when] %>
+	  </div>
+	</div>
+      </div>
+      <% end %>
+    </div>
+    <% end %>
+    
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  </body>
+</html>
+
