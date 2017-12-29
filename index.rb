@@ -136,23 +136,23 @@ def all_tweets()
   return tweets.limit(100).all
 end
 
-def tweets_by (user_id)
+def tweets_by(user_id)
   tweets = DB[:tweet]
-  tweets = tweets.join(:account, :account_id => :account_id)
-  tweets= tweets.filter(:account__account_id => user_id)
+  tweets = tweets.join(:account, account_id: :account_id)
+  tweets= tweets.filter(Sequel[:tweet][:account_id] => user_id)
   tweets = tweets.reverse_order(:when)
   return tweets.limit(100).all
 end
 
-def logged_in? ()
+def logged_in?()
   return session[:value] != nil
 end
 
-def current_user ()
+def current_user()
   return session[:value]
 end
 
-def current_user_id ()
+def current_user_id()
   accounts = DB[:account]
   user = accounts.filter(:email => current_user)
 
